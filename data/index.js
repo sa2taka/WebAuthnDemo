@@ -68,6 +68,7 @@ const register = () => {
     document.getElementById('register_attestation').value = JSON.stringify(attestation, null, 2)
     document.getElementById('register_clientData').value = JSON.stringify(JSON.parse(String.fromCharCode.apply(null, new Uint8Array(clientDataJSON))), null, 2)
     document.getElementById('register_type').value = type
+    document.getElementById('register_pubKey').value = JSON.stringify(attestation.authData.COSEPubKey, null, 2)
   }).catch(function (err) {
      console.log(err)
   })
@@ -93,6 +94,7 @@ const authn = () => {
     document.getElementById('authn_signature').value = formatArrayString(new Uint8Array(signature))
     document.getElementById('authn_userHandle').value =formatArrayString(new Uint8Array(userHandle))
     document.getElementById('authn_type').value = type
+    document.getElementById('authn_pubKey').value = JSON.stringify(authenticator.COSEPubKey, null, 2)
   }).catch(function (err) {
     console.log(err)
   })

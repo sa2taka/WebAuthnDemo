@@ -3,12 +3,12 @@ const strToBin = str => {
 }
 
 const formatArrayString = array => {
-  let returnStr = ''
+  let returnStr = '['
   let isFirst = true
   array.forEach( item => {
-    const c = isFirst ? '[' : ', '
+    const c = isFirst ? '' : ', '
     isFirst = false
-    returnStr += c + item.toString()
+    returnStr += c + item.toString(16)
   })
 
   return returnStr + ']'
