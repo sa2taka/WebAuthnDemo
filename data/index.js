@@ -47,11 +47,13 @@ const getCredentialCreationOptions = () => {
 
 const register = () => {
   const publicKey = getCredentialCreationOptions()
+  console.log('Register PublicKey')
   console.log(publicKey)
   const name = document.getElementById('name').value
 
   navigator.credentials.create({ publicKey })
   .then(function (newCredentialInfo) {
+    console.log('Register Response')
     console.log(newCredentialInfo)
     const { id, rawId, response, type } = newCredentialInfo
     const { attestationObject, clientDataJSON } = response
@@ -76,16 +78,20 @@ const register = () => {
 
 const authn = () => {
   const publicKey = getCredentialRequestOptions()
+  console.log('Auth PublicKey')
   console.log(publicKey)
 
   navigator.credentials.get({ publicKey })
   .then(function (assertion) {
+    console.log('Auth Response')
     console.log(assertion)
 
     const { id, rawId, response, type } = assertion
     const { authenticatorData, clientDataJSON, signature, userHandle } = response
 
     const authenticator = parseAuthData(new Uint8Array(authenticatorData))
+
+    console.log(authenticator)
 
     document.getElementById('authn_id').value = id
     document.getElementById('authn_rawid').value = formatArrayString(new Uint8Array(rawId))
