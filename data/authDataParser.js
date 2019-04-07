@@ -19,15 +19,15 @@ const parseAuthData = data => {
   const credentialId         = data.slice(55, 55 + credentialIdLength)
   const credentialId_base64  = Base64.encode(credentialId)
 
-  const COSEPubKeyBuf        = data.slice(55 + credentialIdLength)
-  const COSEPubKeyTemp       = CBOR.decode(COSEPubKeyBuf.buffer)
-  const COSEPubKey           = {
-                                 'kty': COSEPubKeyTemp['1'],
-                                 'alg': COSEPubKeyTemp['3'],
-                                 'crv': COSEPubKeyTemp['-1'],
-                                 'x': formatArrayString(new Uint8Array(COSEPubKeyTemp['-2'])),
-                                 'y': formatArrayString(new Uint8Array(COSEPubKeyTemp['-3']))
+  const credentialBuf        = data.slice(55 + credentialIdLength)
+  const credentialTemp       = CBOR.decode(credentialBuf.buffer)
+  const credentialPublicKey  = {
+                                 'kty': credentialTemp['1'],
+                                 'alg': credentialTemp['3'],
+                                 'crv': credentialTemp['-1'],
+                                 'x': formatArrayString(new Uint8Array(credentialTemp['-2'])),
+                                 'y': formatArrayString(new Uint8Array(credentialTemp['-3']))
                                }
 
-  return { rpidHash, flags, counter, aaguid, credentialId, credentialId_base64, COSEPubKey }
+  return { rpidHash, flags, counter, aaguid, credentialId, credentialId_base64, credentialPublicKey  }
 }

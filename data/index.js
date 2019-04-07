@@ -24,22 +24,23 @@ const getCredentialCreationOptions = () => {
   document.getElementById('register_challenge').value = Base64.encode(challenge)
 
   const credentialCreationOptions = {
-    'challenge': challenge,
-    'rp': {
+    'challenge': challenge, // 登録時、認証時毎回違う値を入れる
+    'rp': {  // Relying Partyの情報、nameのみ必須、この他に、iconというメンバーもつけられる
       'id': 'localhost',
       'name': 'localhost webAuthn Demo'
     },
-    'user': {
+    'user': { // 認証のユーザーの情報、全て必須。この他に、iconというメンバーもつけられる
       'id': strToBin(name),
       'name': name,
       'displayName': name
     },
-    'pubKeyCredParams': [
+    'pubKeyCredParams': [ // 必須、
       { 'type': 'public-key', 'alg': -7  },
       { 'type': 'public-key', 'alg': -257 }
     ],
-    timeout: 60000,
-    attestation: "direct"
+    timeout: 60000, // 必須ではない。タイムアウトまでの時間[ミリ秒]
+    attestation: 'direct' // 認証に関するオプション
+    // その他にもメンバーが選択できる
   }
 
   return credentialCreationOptions
@@ -72,7 +73,7 @@ const register = () => {
     document.getElementById('register_type').value = type
     document.getElementById('register_pubKey').value = JSON.stringify(attestation.authData.COSEPubKey, null, 2)
   }).catch(function (err) {
-     console.log(err)
+    console.log(err)
   })
 }
 
